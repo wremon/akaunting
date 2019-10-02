@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Incomes;
 
-use App\Events\InvoiceCreated;
 use App\Events\InvoicePrinting;
-use App\Events\InvoiceUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Income\Invoice as Request;
 use App\Http\Requests\Income\InvoiceAddItem as ItemRequest;
@@ -14,21 +12,15 @@ use App\Jobs\Income\UpdateInvoice;
 use App\Jobs\Income\CreateInvoicePayment;
 use App\Models\Banking\Account;
 use App\Models\Common\Item;
-use App\Models\Common\Media;
 use App\Models\Income\Customer;
 use App\Models\Income\Invoice;
 use App\Models\Income\InvoiceHistory;
-use App\Models\Income\InvoiceItem;
-use App\Models\Income\InvoiceItemTax;
-use App\Models\Income\InvoiceTotal;
 use App\Models\Income\InvoicePayment;
 use App\Models\Income\InvoiceStatus;
 use App\Models\Setting\Category;
 use App\Models\Setting\Currency;
 use App\Models\Setting\Tax;
 use App\Notifications\Income\Invoice as Notification;
-use App\Notifications\Common\Item as ItemNotification;
-use App\Notifications\Common\ItemReminder as ItemReminderNotification;
 use App\Traits\Currencies;
 use App\Traits\DateTime;
 use App\Traits\Incomes;

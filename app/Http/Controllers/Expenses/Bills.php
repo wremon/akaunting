@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\Expenses;
 
-use App\Events\BillCreated;
-//use App\Events\BillPrinting;
-use App\Events\BillUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Expense\Bill as Request;
 use App\Http\Requests\Expense\BillAddItem as ItemRequest;
@@ -13,13 +10,9 @@ use App\Jobs\Expense\CreateBill;
 use App\Jobs\Expense\UpdateBill;
 use App\Jobs\Expense\CreateBillPayment;
 use App\Models\Banking\Account;
-use App\Models\Common\Media;
 use App\Models\Expense\BillStatus;
 use App\Models\Expense\Vendor;
 use App\Models\Expense\Bill;
-use App\Models\Expense\BillItem;
-use App\Models\Expense\BillItemTax;
-use App\Models\Expense\BillTotal;
 use App\Models\Expense\BillHistory;
 use App\Models\Expense\BillPayment;
 use App\Models\Common\Item;

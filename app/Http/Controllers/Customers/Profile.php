@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\Profile as Request;
-use App\Models\Auth\User;
 use App\Traits\Uploads;
 
 class Profile extends Controller
