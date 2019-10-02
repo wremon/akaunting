@@ -33,13 +33,14 @@ class Invoices extends Controller
     public function index()
     {
         $invoices = Invoice::with(['customer', 'status', 'items', 'payments', 'histories'])
-            ->accrued()->where('customer_id', auth()->user()->customer->id)
-            ->collect(['invoice_number'=> 'desc']);
+                           ->accrued()->where('customer_id', auth()->user()->customer->id)
+                           ->collect(['invoice_number' => 'desc']);
 
         $categories = collect(Category::enabled()->type('income')->orderBy('name')->pluck('name', 'id'));
 
         $statuses = collect(InvoiceStatus::get()->each(function ($item) {
             $item->name = trans('invoices.status.' . $item->code);
+
             return $item;
         })->pluck('name', 'code'));
 
@@ -49,8 +50,7 @@ class Invoices extends Controller
     /**
      * Show the form for viewing the specified resource.
      *
-     * @param  Invoice  $invoice
-     *
+     * @param  Invoice $invoice
      * @return Response
      */
     public function show(Invoice $invoice)
@@ -59,7 +59,9 @@ class Invoices extends Controller
 
         $currencies = Currency::enabled()->orderBy('name')->pluck('name', 'code')->toArray();
 
-        $account_currency_code = Account::where('id', setting('general.default_account'))->pluck('currency_code')->first();
+        $account_currency_code = Account::where('id', setting('general.default_account'))
+                                        ->pluck('currency_code')
+                                        ->first();
 
         $customers = Customer::enabled()->orderBy('name')->pluck('name', 'id');
 
@@ -67,14 +69,15 @@ class Invoices extends Controller
 
         $payment_methods = Modules::getPaymentMethods();
 
-        return view('customers.invoices.show', compact('invoice', 'accounts', 'currencies', 'account_currency_code', 'customers', 'categories', 'payment_methods'));
+        return view('customers.invoices.show',
+            compact('invoice', 'accounts', 'currencies', 'account_currency_code', 'customers', 'categories',
+                'payment_methods'));
     }
 
     /**
      * Show the form for viewing the specified resource.
      *
-     * @param  Invoice  $invoice
-     *
+     * @param  Invoice $invoice
      * @return Response
      */
     public function printInvoice(Invoice $invoice)
@@ -87,8 +90,7 @@ class Invoices extends Controller
     /**
      * Show the form for viewing the specified resource.
      *
-     * @param  Invoice  $invoice
-     *
+     * @param  Invoice $invoice
      * @return Response
      */
     public function pdfInvoice(Invoice $invoice)
@@ -161,7 +163,9 @@ class Invoices extends Controller
 
         $currencies = Currency::enabled()->pluck('name', 'code')->toArray();
 
-        $account_currency_code = Account::where('id', setting('general.default_account'))->pluck('currency_code')->first();
+        $account_currency_code = Account::where('id', setting('general.default_account'))
+                                        ->pluck('currency_code')
+                                        ->first();
 
         $customers = Customer::enabled()->pluck('name', 'id');
 
@@ -175,13 +179,16 @@ class Invoices extends Controller
             $codes = explode('.', $payment_method_key);
 
             if (!isset($payment_actions[$codes[0]])) {
-                $payment_actions[$codes[0]] = SignedUrl::sign(url('signed/invoices/' . $invoice->id . '/' . $codes[0]), 1);
+                $payment_actions[$codes[0]] = SignedUrl::sign(url('signed/invoices/' . $invoice->id . '/' . $codes[0]),
+                    1);
             }
         }
 
         $print_action = SignedUrl::sign(route('signed.invoices.print', $invoice->id), 1);
-        $pdf_action = SignedUrl::sign(route('signed.invoices.pdf', $invoice->id), 1);
+        $pdf_action   = SignedUrl::sign(route('signed.invoices.pdf', $invoice->id), 1);
 
-        return view('customers.invoices.link', compact('invoice', 'accounts', 'currencies', 'account_currency_code', 'customers', 'categories', 'payment_methods', 'payment_actions', 'print_action', 'pdf_action'));
+        return view('customers.invoices.link',
+            compact('invoice', 'accounts', 'currencies', 'account_currency_code', 'customers', 'categories',
+                'payment_methods', 'payment_actions', 'print_action', 'pdf_action'));
     }
 }

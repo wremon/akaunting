@@ -21,10 +21,10 @@ class Dashboard extends Controller
         $invoices = Invoice::with('status')->accrued()->where('customer_id', $customer->id)->get();
 
         $start = Date::parse(request('start', Date::today()->startOfYear()->format('Y-m-d')));
-        $end = Date::parse(request('end', Date::today()->endOfYear()->format('Y-m-d')));
+        $end   = Date::parse(request('end', Date::today()->endOfYear()->format('Y-m-d')));
 
         $start_month = $start->month;
-        $end_month = $end->month;
+        $end_month   = $end->month;
 
         // Monthly
         $labels = [];
@@ -60,28 +60,28 @@ class Dashboard extends Controller
         $total = count($unpaid) + count($paid) + count($partial_paid) + count($overdue);
 
         $progress = [
-            'unpaid' => count($unpaid),
-            'paid' => count($paid),
-            'overdue' => count($overdue),
+            'unpaid'         => count($unpaid),
+            'paid'           => count($paid),
+            'overdue'        => count($overdue),
             'partially_paid' => count($partial_paid),
-            'total' => $total,
+            'total'          => $total,
         ];
 
-        $unpaid = $this->calculateTotals($unpaid, $start, $end, 'unpaid');
-        $paid = $this->calculateTotals($paid, $start, $end, 'paid');
+        $unpaid       = $this->calculateTotals($unpaid, $start, $end, 'unpaid');
+        $paid         = $this->calculateTotals($paid, $start, $end, 'paid');
         $partial_paid = $this->calculateTotals($partial_paid, $start, $end, 'partial');
-        $overdue = $this->calculateTotals($overdue, $start, $end, 'overdue');
+        $overdue      = $this->calculateTotals($overdue, $start, $end, 'overdue');
 
         $chart = Charts::multi('line', 'chartjs')
-            ->dimensions(0, 300)
-            ->colors(['#dd4b39', '#6da252', '#f39c12', '#00c0ef'])
-            ->dataset(trans('general.unpaid'), $unpaid)
-            ->dataset(trans('general.paid'), $paid)
-            ->dataset(trans('general.overdue'), $overdue)
-            ->dataset(trans('general.partially_paid'), $partial_paid)
-            ->labels($labels)
-            ->credits(false)
-            ->view('vendor.consoletvs.charts.chartjs.multi.line');
+                       ->dimensions(0, 300)
+                       ->colors(['#dd4b39', '#6da252', '#f39c12', '#00c0ef'])
+                       ->dataset(trans('general.unpaid'), $unpaid)
+                       ->dataset(trans('general.paid'), $paid)
+                       ->dataset(trans('general.overdue'), $overdue)
+                       ->dataset(trans('general.partially_paid'), $partial_paid)
+                       ->labels($labels)
+                       ->credits(false)
+                       ->view('vendor.consoletvs.charts.chartjs.multi.line');
 
         return view('customers.dashboard.index', compact('customer', 'invoices', 'progress', 'chart'));
     }
@@ -92,10 +92,10 @@ class Dashboard extends Controller
 
         $date_format = 'Y-m';
 
-        $n = 1;
+        $n          = 1;
         $start_date = $start->format($date_format);
-        $end_date = $end->format($date_format);
-        $next_date = $start_date;
+        $end_date   = $end->format($date_format);
+        $next_date  = $start_date;
 
         $s = clone $start;
 

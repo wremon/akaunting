@@ -9,7 +9,6 @@ use Auth;
 
 class Transactions extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *

@@ -13,7 +13,6 @@ use Auth;
 
 class Payments extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +20,9 @@ class Payments extends Controller
      */
     public function index()
     {
-        $payments = Payment::with(['account', 'category'])->where('customer_id', '=', Auth::user()->customer->id)->paginate();
+        $payments = Payment::with(['account', 'category'])
+                           ->where('customer_id', '=', Auth::user()->customer->id)
+                           ->paginate();
 
         $payment_methods = Modules::getPaymentMethods('all');
 
@@ -37,8 +38,7 @@ class Payments extends Controller
     /**
      * Show the form for viewing the specified resource.
      *
-     * @param  Payment  $payment
-     *
+     * @param  Payment $payment
      * @return Response
      */
     public function show(Payment $payment)
