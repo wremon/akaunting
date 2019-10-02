@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\Controller;
 use App\Models\Banking\Account;
 use App\Models\Expense\Bill;
-use App\Models\Expense\Payment;
 use App\Models\Expense\Vendor;
 use App\Models\Income\Invoice;
-use App\Models\Income\Revenue;
 use App\Models\Income\Customer;
 use App\Models\Common\Item;
 

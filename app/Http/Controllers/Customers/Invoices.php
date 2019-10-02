@@ -10,7 +10,6 @@ use App\Models\Income\Invoice;
 use App\Models\Income\InvoiceStatus;
 use App\Models\Setting\Category;
 use App\Models\Setting\Currency;
-use App\Models\Common\Media;
 use App\Traits\Currencies;
 use App\Traits\DateTime;
 use App\Traits\Uploads;

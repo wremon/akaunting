@@ -7,7 +7,6 @@ use App\Http\Requests\Banking\Reconciliation as Request;
 use App\Http\Requests\Banking\ReconciliationCalculate as CalculateRequest;
 use App\Models\Banking\Account;
 use App\Models\Banking\Reconciliation;
-use App\Models\Setting\Currency;
 use Date;
 
 class Reconciliations extends Controller
